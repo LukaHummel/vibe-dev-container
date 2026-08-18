@@ -24,3 +24,12 @@ RUN curl -fsSL https://fnm.vercel.app/install | bash \
     && npm install -g npm@latest @openai/codex t3@latest
 
 ENV PATH="/home/codespace/.local/bin:$PATH"
+
+# Copy and set entrypoint script
+USER root
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+USER codespace
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["sleep", "infinity"]
